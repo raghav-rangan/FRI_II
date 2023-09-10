@@ -37,10 +37,10 @@
 \usepackage{hyperref}
 
 \title{\LARGE \bf
-Elevator Door Status Detection and Autonomous Robot Navigation}
+Adding LLM-based Complex Query Support to Semantically Labelled Maps}
 
 
-\author{Raghav Rangan, Siddh Bamb, and Kevin Zhao% <-this % stops a space
+\author{Raghav Rangan, Siddh Bamb, Kevin Zhao, Jerry He% <-this % stops a space
 }
 %\thanks{*This work was supported by...}% <-this % stops a space
 %\thanks{$^{1}$Christina Petlowany is with the Cockrell School of Engineering,
@@ -65,30 +65,30 @@ Elevator Door Status Detection and Autonomous Robot Navigation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-    Abstract
+    The purpose of our project is to design and implement an LLM-based system to take a query regarding the internal state of a mapped space and answer it using labeled map data. Our goal is to make a robotic system capable of relating objects to each other both semantically and positionally in order to make it possible for it to answer questions or simply describe with relevant detail the space it has mapped. Our end goal is a system that is capable of describing a space in a way a human would.
 \end{abstract}
     
 \section{Introduction}
-intro
+    The basis for our idea was the Robot Tour Guide project that was proposed to us by Dr. Hart. however, we felt like the use of the LLM could be expanded from simply interacting with a person, and could innterface with the robot's mapping software to support more effective, contextual interaction. To achieve this, we first need to take a look at how the lab's current semantic mapping software works and outputs information. We will then look into CLIP, and how it can be used to draw relations between objects while labeling them from a segmented input. Lastly, we will be looking at joint embeddings capable of encoding aspects of an image (in our case, the output of the map) into a set of vectors, and decoding this set into a meaningful sentence, or set of sentences regarding a room. a more traditional LLM API, like Llama or GPT can be layered over this to support the frontend interaction. Our goal is for the frontend interaction to be as similar to a human's description of the space as possible.
 
 \section{Background}
-Background
+\begin{itemize}
+    \item ALL OF THESE NEED TO BE DONE with at least 1 paper.
+    \item Research into segmentation + labeling
+    \item CLIP research
+    \item Joint embedding research
+    \item Models to describe an image
+\end{itemize}
 
 
 \section{Methodology}
-Method
+    ADD THE CLIP/Joint Embedding research HERE as well.
+    \\
+    3 layers of the entire implementation: Semantic map - joint embedding - LLM API. This pipeline will support the entire interaction process. The majority of our work will deal with the creation of the joint embedding, and figuring out how to make it describe the map in enough detail so the LLM layer has a well-sized body of information to answer questions from. 
 
 
 \section{Experimental Setup}
-Experiment / what we test
-
-
-\section{Results}
-results (we do not need this rn)
-
-
-\section{Discussion}
-We do not need this rn
+    Since our goal is to make our system's interaction feel as human as possible, our experiment will involve two types of tests. The first will be evaluation metrics of the system itself, through inbuilt network evaluation mechanisms. The second will be a practical test which can be done once the system is operational. We will have subjects interact with a human describing the space as well as our frontend, without knowing which one they are talking to. We will then ask them which they thought was which. Statistical tests can then be run on this data to see if there was a statistically signficant result (people were able to recognize which interaction was which correctly).
 
 
 \section{Conclusion}
