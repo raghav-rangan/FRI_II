@@ -72,14 +72,10 @@ Adding LLM-based Complex Query Support to Semantically Labelled Maps}
     The basis for our idea was the Robot Tour Guide project that was proposed to us by Dr. Hart. however, we felt like the use of the LLM could be expanded from simply interacting with a person, and could interface with the robot's mapping software to support more effective, contextual interaction. To achieve this, we first need to take a look at how the lab's current semantic mapping software works and outputs information. We will then look into CLIP, and how it can be used to draw relations between objects while labeling them from a segmented input. Lastly, we will be looking at joint embeddings capable of encoding aspects of an image (in our case, the output of the map) into a set of vectors, and decoding this set into a meaningful sentence, or set of sentences regarding a room. a more traditional LLM API, like Llama or GPT can be layered over this to support the frontend interaction. Our goal is for the frontend interaction to be as similar to a human's description of the space as possible.
 
 \section{Background}
-As part of our preliminary research, we looked into how CLIP, CLIPSeg, and joint embedding spaces work. CLIP is a contrastive learning image model that takes advantage of a joint embedding space mapped onto by both a text encoder and image encoder. By training the encoders to map semantically similar text and images to similar values and push away dissimilar ones, the model can then pick what text matches the image most accurately. This allows for impressive zero shot performance, much better than previous models like ImageNet. CLIPSeg adds an additional decoder layer on top of this, taking the CLIP output and decoding it to segment out the desired part of the image.
+    As part of our preliminary research, we looked into how CLIP, CLIPSeg, and joint embedding spaces work. CLIP is a contrastive learning image model that takes advantage of a joint embedding space mapped onto by both a text encoder and image encoder. By training the encoders to map semantically similar text and images to similar values and push away dissimilar ones, the model can then pick what text matches the image most accurately. This allows for impressive zero shot performance, much better than previous models like ImageNet. CLIPSeg adds an additional decoder layer on top of this, taking the CLIP output and decoding it to segment out the desired part of the image.
+    \\
+    NEED TO ADD CITATIONS HERE AND METHODOLOGY
 
-\begin{itemize}
-    
-    \item ALL OF THESE NEED TO BE DONE with at least 1 paper.
-    \item Research into segmentation + labeling
-    \item Models to describe an image
-\end{itemize}
 
 
 \section{Methodology}
@@ -87,7 +83,7 @@ As part of our preliminary research, we looked into how CLIP, CLIPSeg, and joint
 
 
 \section{Experimental Setup}
-    Since our goal is to make our system's interaction feel as human as possible, our experiment will involve two types of tests. The first will be evaluation metrics of the system itself, through inbuilt network evaluation mechanisms. The second will be a practical test which can be done once the system is operational. We will have subjects interact with a human describing the space as well as our frontend, without knowing which one they are talking to. We will then ask them which they thought was which. Statistical tests can then be run on this data to see if there was a statistically signficant result (people were able to recognize which interaction was which correctly).
+    Since our goal is to make our system's interaction feel as human as possible, our experiment will involve two types of tests. The first will be evaluation metrics of the system itself, through inbuilt network evaluation mechanisms. The second will be a practical test which can be done once the system is operational. We will have subjects interact with a human describing the space as well as our frontend, without knowing which one they are talking to. We will then ask them which they thought was which. Statistical tests can then be run on this data to see if there was a statistically signficant result (people were able to recognize which interaction was which correctly). A significant difference would mean our system is distinguishable from a human's description, which is a negative. We are looking for an insignificant result from this test, which would mean our system's output is highly similar to a real person's description. 
 
 
 \section{Conclusion}
