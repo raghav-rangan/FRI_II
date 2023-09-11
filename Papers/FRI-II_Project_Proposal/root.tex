@@ -69,22 +69,21 @@ Adding LLM-based Complex Query Support to Semantically Labelled Maps}
 \end{abstract}
     
 \section{Introduction}
-    The basis for our idea was the Robot Tour Guide project that was proposed to us by Dr. Hart. however, we felt like the use of the LLM could be expanded from simply interacting with a person, and could innterface with the robot's mapping software to support more effective, contextual interaction. To achieve this, we first need to take a look at how the lab's current semantic mapping software works and outputs information. We will then look into CLIP, and how it can be used to draw relations between objects while labeling them from a segmented input. Lastly, we will be looking at joint embeddings capable of encoding aspects of an image (in our case, the output of the map) into a set of vectors, and decoding this set into a meaningful sentence, or set of sentences regarding a room. a more traditional LLM API, like Llama or GPT can be layered over this to support the frontend interaction. Our goal is for the frontend interaction to be as similar to a human's description of the space as possible.
+    The basis for our idea was the Robot Tour Guide project that was proposed to us by Dr. Hart. however, we felt like the use of the LLM could be expanded from simply interacting with a person, and could interface with the robot's mapping software to support more effective, contextual interaction. To achieve this, we first need to take a look at how the lab's current semantic mapping software works and outputs information. We will then look into CLIP, and how it can be used to draw relations between objects while labeling them from a segmented input. Lastly, we will be looking at joint embeddings capable of encoding aspects of an image (in our case, the output of the map) into a set of vectors, and decoding this set into a meaningful sentence, or set of sentences regarding a room. a more traditional LLM API, like Llama or GPT can be layered over this to support the frontend interaction. Our goal is for the frontend interaction to be as similar to a human's description of the space as possible.
 
 \section{Background}
+As part of our preliminary research, we looked into how CLIP, CLIPSeg, and joint embedding spaces work. CLIP is a contrastive learning image model that takes advantage of a joint embedding space mapped onto by both a text encoder and image encoder. By training the encoders to map semantically similar text and images to similar values and push away dissimilar ones, the model can then pick what text matches the image most accurately. This allows for impressive zero shot performance, much better than previous models like ImageNet. CLIPSeg adds an additional decoder layer on top of this, taking the CLIP output and decoding it to segment out the desired part of the image.
+
 \begin{itemize}
+    
     \item ALL OF THESE NEED TO BE DONE with at least 1 paper.
     \item Research into segmentation + labeling
-    \item CLIP research
-    \item Joint embedding research
     \item Models to describe an image
 \end{itemize}
 
 
 \section{Methodology}
-    ADD THE CLIP/Joint Embedding research HERE as well.
-    \\
-    3 layers of the entire implementation: Semantic map - joint embedding - LLM API. This pipeline will support the entire interaction process. The majority of our work will deal with the creation of the joint embedding, and figuring out how to make it describe the map in enough detail so the LLM layer has a well-sized body of information to answer questions from. 
+    We will have three layers of the entire implementation: Semantic map - joint embedding - LLM API. This pipeline will support the entire interaction process. The majority of our work will deal with the creation of the joint embedding, and figuring out how to make it describe the map in enough detail so the LLM layer has a well-sized body of information to answer questions from. To help us in this process, we will look into how we can use CLIP/CLIPSeg to derive meaningful semantic relations, and potentially build off of CLIP's joint embedding space for text and image. This is applicable to our project since we can take a picture of the room, run it through CLIP/CLIPSeg, and derive useful semantic information that can be fed to the LLM, although additional training/modification of the joint mapping spaces may be necessary.
 
 
 \section{Experimental Setup}
