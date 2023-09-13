@@ -69,7 +69,7 @@ Adding LLM-based Complex Query Support to Semantically Labelled Maps}
 \end{abstract}
     
 \section{Introduction}
-    The basis for our idea was the Robot Tour Guide project that was proposed to us by Dr. Hart. however, we felt like the use of the LLM could be expanded from simply interacting with a person, and could interface with the robot's mapping software to support more effective, contextual interaction. To achieve this, we first need to take a look at how the lab's current semantic mapping software works and outputs information. We will then look into CLIP, and how it can be used to draw relations between objects while labeling them from a segmented input. Lastly, we will be looking at joint embeddings capable of encoding aspects of an image (in our case, the output of the map) into a set of vectors, and decoding this set into a meaningful sentence, or set of sentences regarding a room. a more traditional LLM API, like Llama or GPT can be layered over this to support the frontend interaction. Our goal is for the frontend interaction to be as similar to a human's description of the space as possible.
+    The basis for our idea was the Robot Tour Guide project that was proposed to us by Dr. Hart. however, we felt like the use of the LLM could be expanded from simply interacting with a person, and could interface with the robot's mapping software to support more effective, contextual interaction. To achieve this, we first need to take a look at how the lab's current semantic mapping software works and outputs information. We will then look into CLIP, and how it can be used to draw relations between objects while labeling them from a segmented input. Lastly, we will be looking at joint embeddings capable of encoding aspects of an image (in our case, the output of the map) into a set of vectors, and decoding this set into a meaningful sentence, or set of sentences regarding a room. An LLM API, like Llama or GPT can be layered over this to support the frontend interaction. Our goal is for the frontend interaction to be as similar to a human's description of the space as possible.
 
 \section{Background}
     As part of our preliminary research, we looked into how CLIP, CLIPSeg, and joint embedding spaces work. CLIP is a contrastive learning image model that takes advantage of a joint embedding space mapped onto by both a text encoder and image encoder. By training the encoders to map semantically similar text and images to similar values and push away dissimilar ones, the model can then pick what text matches the image most accurately. This allows for impressive zero shot performance, much better than previous models like ImageNet. CLIPSeg adds an additional decoder layer on top of this, taking the CLIP output and decoding it to segment out the desired part of the image.
@@ -79,15 +79,34 @@ Adding LLM-based Complex Query Support to Semantically Labelled Maps}
 
 
 \section{Methodology}
-    We will have three layers of the entire implementation: Semantic map - joint embedding - LLM API. This pipeline will support the entire interaction process. The majority of our work will deal with the creation of the joint embedding, and figuring out how to make it describe the map in enough detail so the LLM layer has a well-sized body of information to answer questions from. To help us in this process, we will look into how we can use CLIP/CLIPSeg to derive meaningful semantic relations, and potentially build off of CLIP's joint embedding space for text and image. This is applicable to our project since we can take a picture of the room, run it through CLIP/CLIPSeg, and derive useful semantic information that can be fed to the LLM, although additional training/modification of the joint mapping spaces may be necessary.
+    We will have three layers of the entire implementation: Map data - joint embedding - LLM API. This pipeline will support the entire interaction process. To help us in this process, we will look into how we can use CLIP/CLIPSeg to derive meaningful semantic relations, and potentially build off of CLIP's joint embedding space for text and image. Currently, CLIP generates a set of phrases that could be used to describe the input image, and outputs the one with the greatest applicability or similarity score. This is applicable to our project since we can take a picture of the room, run it through CLIP/CLIPSeg, and derive a useful descriptive phrase regarding the state of the room. However, we want to extract more information, since we need details about as many aspects of the room as possible. To do this, rather than take CLIP's highest scored phrase, we choose a statistically designed sample including the best, the most average, and the worst phrases it generates. For example, the top ten, the middle ten, and the lowest ten. Furthermore, we would feed the CLIP model a variety of input images to capture multiple angles, perspectives, and objects of focus to create as much variation in the phrases as possible. The selected phrases would then be written to a single file, which would be used as the body of text that the LLM interface would use to support human interaction. Our sampling method, as well as the CLIP model will likely require modifications, including adjustments to our sampling technique, as well as potentially retraining CLIP on a dataset of images of a lab room at AHG.
 
 
 \section{Experimental Setup}
     Since our goal is to make our system's interaction feel as human as possible, our experiment will involve two types of tests. The first will be evaluation metrics of the system itself, through inbuilt network evaluation mechanisms. The second will be a practical test which can be done once the system is operational. We will have subjects interact with a human describing the space as well as our frontend, without knowing which one they are talking to. We will then ask them which they thought was which. Statistical tests can then be run on this data to see if there was a statistically signficant result (people were able to recognize which interaction was which correctly). A significant difference would mean our system is distinguishable from a human's description, which is a negative. We are looking for an insignificant result from this test, which would mean our system's output is highly similar to a real person's description. 
 
 
-\section{Conclusion}
-Conslusion
+\section{Timeline}
+    \subsection*{First Four Weeks}
+    \begin{itemize}
+        \item Connect with David and get a better understanding of how the map data is stored.
+        \item Figure out if CLIP can be used as-is with the map data, or if we need to make some modifications to either the format of the output data or the model.
+        \item Implement the CLIP model and run test inferences on some sample data. Determine if the model needs to be retrained on a dataset of map data.
+    \end{itemize}
+
+    \subsection*{Second Four Weeks}
+    \begin{itemize}
+        \item Implement the LLM frontend. Finalize the prompt to be used to make the LLM refer to our body of text to answer questions.
+        \item Fine-tune the phrase selection technique, so we select as many unique phrases as possible, so that the body of text we generate describes different aspects of the room.
+        \item Run metrics and finalize the working of the whole system.
+    \end{itemize}
+
+    \subsection*{Last Three Weeks}
+    \begin{itemize}
+        \item Run experiments: Compare system's descriptions to human descriptions, ask subjects to identify which is which.
+        \item Statistican analysis: Check for significance - can people tell the system and the human apart?
+        \item Summarize final metrics and results, create and finalize paper and presentation.
+    \end{itemize}
 
 % uncomment this >>> when we actually cite stuff
 %\bibliographystyle{IEEEtran}
