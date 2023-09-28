@@ -1,0 +1,97 @@
+Top predictions:
+
+desk to the right of lights: 3.74%
+lights above desk: 3.13%
+wall to the right of desk: 3.01%
+lights to the right of desk: 2.98%
+desk to the left of wall: 2.66%
+desk above person: 2.66%
+desk to the left of lights: 2.63%
+desk to the right of wall: 2.49%
+wall to the right of table: 1.72%
+desk to the left of person: 1.66%
+desk to the right of desk: 1.53%
+desk to the left of table: 1.53%
+desk to the right of table: 1.51%
+desk to the right of person: 1.50%
+lights to the left of desk: 1.44%
+desk above lights: 1.38%
+table to the left of wall: 1.32%
+desk above paper: 1.32%
+paper to the left of wall: 1.25%
+ wall above desk: 1.12%
+lights to the left of wall: 1.09%
+laptop to the right of wall: 1.04%
+wall to the left of desk: 1.02%
+ desk above wall: 0.93%
+lights to the right of wall: 0.93%
+desk to the left of desk: 0.92%
+table to the right of wall: 0.90%
+lights next to desk: 0.86%
+person above desk: 0.84%
+wall to the left of table: 0.81%
+paper to the right of wall: 0.80%
+paper above desk: 0.75%
+ desk under wall: 0.75%
+person to the left of desk: 0.71%
+desk to the right of paper: 0.70%
+wall above paper: 0.70%
+wall next to desk: 0.67%
+ lights above pc: 0.67%
+person to the right of desk: 0.67%
+paper above wall: 0.63%
+ desk above desk: 0.61%
+desk on top of lights: 0.61%
+laptop to the right of lights: 0.60%
+   wall above pc: 0.60%
+desk to the left of paper: 0.59%
+laptop above lights: 0.58%
+table to the right of desk: 0.56%
+paper to the right of desk: 0.56%
+person to the left of wall: 0.55%
+wall to the right of laptop: 0.55%
+
+
+`````````````````````````````````````````````````
+right side of room above trading desk: 6.13%
+right side of room to the left of trading desk: 5.00%
+trading desk to the right of left side of room: 3.33%
+trading desk on the opposite side of the room as person: 2.79%
+left side of room far away from trading desk: 2.59%
+desk to the left of lights: 2.18%
+paper on the opposite side of the room as top of room: 2.17%
+middle of room to the left of trading desk: 2.09%
+trading desk under wall: 2.00%
+middle of room above trading desk: 1.95%
+aardvark on the opposite side of the room as trading desk: 1.95%
+right side of room far away from desk: 1.87%
+lights on the opposite side of the room as trading desk: 1.76%
+left side of room above paper: 1.68%
+trading desk on the same side of the room as person: 1.56%
+
+
+`````````````````````````````````````````````````
+jane street software: 88.92%
+monitors and pcs on desks: 7.39%
+person at the desks: 0.98%
+pc sitting on desks and floor: 0.95%
+desks around the room: 0.73%
+pillar in middle of room: 0.27%
+   chair at desk: 0.24%
+person using computer: 0.23%
+      empty room: 0.17%
+keyboard on desk: 0.05%
+whiteboard on wall: 0.03%
+   apple on desk: 0.02%
+         kitchen: 0.01%
+        baseball: 0.00%
+          banana: 0.00%
+
+
+`````````````````````````````````````````````````
+
+jane street quant intern: 93.69%
+monitors and pcs on desks: 4.38%
+person at the desks: 0.58%
+pc sitting on desks and floor: 0.56%
+desks around the room: 0.43%
