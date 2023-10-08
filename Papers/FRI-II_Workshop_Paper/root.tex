@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+%In case you encounter the following error:
+%Error 1010 The PDF file may be corrupt (unable to open PDF file) OR
+%Error 1000 An error occurred while parsing a contents stream. Unable to analyze the PDF file.
+%This is a known problem with pdfLaTeX conversion filter. The file cannot be opened with acrobat reader
+%Please use one of the alternatives below to circumvent this error by uncommenting one or the other
+%\pdfobjcompresslevel=0
+%\pdfminorversion=4
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{\LARGE \bf
+Adding LLM-based Complex Query Support to Semantically Labelled Maps}
+
+
+\author{Raghav Rangan, Siddh Bamb, Kevin Zhao, Jerry He% <-this % stops a space
+}
+%\thanks{*This work was supported by...}% <-this % stops a space
+%\thanks{$^{1}$Christina Petlowany is with the Cockrell School of Engineering,
+%        The University of Texas at Austin, Austin, TX 78712, USA
+%        {\tt\small cpetlowany@utexas.edu}}%
+%\thanks{$^{2}$Justin Hart is with the College of Natural Sciences, The %University of Texas at Austin,
+%        Austin, TX 78712, USA
+%        {\tt\small justinhart@utexas.edu}}%
+%}
+
+% todo other authors
+
+
+\begin{document}
+
+
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+    The purpose of our project is to design and implement an LLM-based system to take a query regarding the internal state of a mapped space and answer it using labeled map data. Our goal is to make a robotic system capable of relating objects to each other both semantically and positionally in order to make it possible for it to answer questions or simply describe with relevant detail the space it has mapped. We propose a system that creates map data through the use of a scene graph generation (SGG) model. The output of this model, which is a relational graph connecting all the objects the network detects in the scene, is converted into a set of descriptive phrases using a simple algorithm, and fed into GPT-3.5, which handles the querying process. Our results showed that ChatGPT is very good at answering questions based on information previously provided to it, and our SGG model was able to create a detailed and accurate enough relational graph of several test scenarios to make the entire system operate functionally.
+\end{abstract}
+    
+\section{Introduction}
+    We began our project with an investigation into existing object detection frameworks, namely CLIP, to test how accurately it could identify relational phrases in an input image. We found that it did quite poorly, often detecting contradictory phrases with equal confidence. Our focus shifted onto finding a better way to handle object detection, and we decided on scene graph generation. In essence, an SGG model is capable of taking an input image, detecting objects within it, and creating a graph that relates each of the objects with another. The vertices of this graph are the objects, and the edges connecting them are the relationship. We chose to train our SGG model on Visual Genome, a dataset containing various images annotated with a relational graph of their contents. In this way, the edges of our output graph would be prepositions, thus drawing a positional relationship between a pair of objects. *ADD MORE DETAIL ABOUT SGG MODEL ONCE WE WRITE THE CODE*. Turning the resultant graph into a set of phrases is accomplished through a simple multi-source breadth-first search (BFS). More specifically, for each vertex, we consider its relationship with each of its neighbors, combine the two vertices and the edge with string manipulation, and add the phrase to a larger string, which represents the eventual paragraph which will be generated after the multi-source BFS is complete. We feed this body of text into ChatGPT through the GPT-3.5 API. Specifically, we prompt ChatGPT to answer the following questions based on a body of text, and then provide it with our output paragraph. Finally, the end user is able to interact with the data, asking questions like, "How many chairs are in the room?", "Is there a lamp next to the couch?", etc.
+
+\section{Background}
+    As part of our preliminary research, we looked into how CLIP, CLIPSeg, and joint embedding spaces work. CLIP is a contrastive learning image model that takes advantage of a joint embedding space mapped onto by both a text encoder and image encoder. By training the encoders to map semantically similar text and images to similar values and push away dissimilar ones, the model can then pick what text matches the image most accurately. This allows for impressive zero shot performance, much better than previous models like ImageNet. CLIPSeg adds an additional decoder layer on top of this, taking the CLIP output and decoding it to segment out the desired part of the image.
+    \\
+    NEED TO ADD CITATIONS HERE AND METHODOLOGY
+
+
+
+\section{Methodology}
+    We will have three layers of the entire implementation: Map data - joint embedding - LLM API. This pipeline will support the entire interaction process. To help us in this process, we will look into how we can use CLIP/CLIPSeg to derive meaningful semantic relations, and potentially build off of CLIP's joint embedding space for text and image. Currently, CLIP generates a set of phrases that could be used to describe the input image, and outputs the one with the greatest applicability or similarity score. This is applicable to our project since we can take a picture of the room, run it through CLIP/CLIPSeg, and derive a useful descriptive phrase regarding the state of the room. However, we want to extract more information, since we need details about as many aspects of the room as possible. To do this, rather than take CLIP's highest scored phrase, we choose a statistically designed sample including the best, the most average, and the worst phrases it generates. For example, the top ten, the middle ten, and the lowest ten. Furthermore, we would feed the CLIP model a variety of input images to capture multiple angles, perspectives, and objects of focus to create as much variation in the phrases as possible. The selected phrases would then be written to a single file, which would be used as the body of text that the LLM interface would use to support human interaction. Our sampling method, as well as the CLIP model will likely require modifications, including adjustments to our sampling technique, as well as potentially retraining CLIP on a dataset of images of a lab room at AHG.
+
+
+\section{Experimental Setup}
+    Since our goal is to make our system's interaction feel as human as possible, our experiment will involve two types of tests. The first will be evaluation metrics of the system itself, through inbuilt network evaluation mechanisms. The second will be a practical test which can be done once the system is operational. We will have subjects interact with a human describing the space as well as our frontend, without knowing which one they are talking to. We will then ask them which they thought was which. Statistical tests can then be run on this data to see if there was a statistically signficant result (people were able to recognize which interaction was which correctly). A significant difference would mean our system is distinguishable from a human's description, which is a negative. We are looking for an insignificant result from this test, which would mean our system's output is highly similar to a real person's description. 
+
+
+\section{Timeline}
+    \subsection*{First Four Weeks}
+    \begin{itemize}
+        \item Connect with David and get a better understanding of how the map data is stored.
+        \item Figure out if CLIP can be used as-is with the map data, or if we need to make some modifications to either the format of the output data or the model.
+        \item Implement the CLIP model and run test inferences on some sample data. Determine if the model needs to be retrained on a dataset of map data.
+    \end{itemize}
+
+    \subsection*{Second Four Weeks}
+    \begin{itemize}
+        \item Implement the LLM frontend. Finalize the prompt to be used to make the LLM refer to our body of text to answer questions.
+        \item Fine-tune the phrase selection technique, so we select as many unique phrases as possible, so that the body of text we generate describes different aspects of the room.
+        \item Run metrics and finalize the working of the whole system.
+    \end{itemize}
+
+    \subsection*{Last Three Weeks}
+    \begin{itemize}
+        \item Run experiments: Compare system's descriptions to human descriptions, ask subjects to identify which is which.
+        \item Statistican analysis: Check for significance - can people tell the system and the human apart?
+        \item Summarize final metrics and results, create and finalize paper and presentation.
+    \end{itemize}
+
+% uncomment this >>> when we actually cite stuff
+%\bibliographystyle{IEEEtran}
+%\bibliography{bibliography}
+
+
+\end{document}
+
+% todo read paper Blake holman Watch where you're going
