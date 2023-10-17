@@ -5,3 +5,5 @@
 *.synctex.gz
 *.aux
 *.out
+*.bbl
+*.blg
