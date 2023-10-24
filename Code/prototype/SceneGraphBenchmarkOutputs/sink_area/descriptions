@@ -1,0 +1,132 @@
+**************************************************
+box_labels 0: sink; score: 0.6849973797798157
+box_labels 1: door; score: 0.5118403434753418
+box_labels 2: cabinet; score: 0.409049928188324
+box_labels 3: shelf; score: 0.395546555519104
+box_labels 4: door; score: 0.39204537868499756
+box_labels 5: cabinet; score: 0.3570299446582794
+box_labels 6: drawer; score: 0.2692882716655731
+box_labels 7: drawer; score: 0.24967758357524872
+box_labels 8: sign; score: 0.24663160741329193
+box_labels 9: drawer; score: 0.18698927760124207
+box_labels 10: cabinet; score: 0.17950846254825592
+box_labels 11: board; score: 0.16615255177021027
+box_labels 12: counter; score: 0.1650635004043579
+box_labels 13: box; score: 0.14666032791137695
+box_labels 14: screen; score: 0.13505122065544128
+box_labels 15: door; score: 0.1239483654499054
+box_labels 16: handle; score: 0.12368455529212952
+box_labels 17: drawer; score: 0.11434416472911835
+box_labels 18: door; score: 0.10645665973424911
+box_labels 19: cabinet; score: 0.10234888643026352
+box_labels 20: room; score: 0.08589814603328705
+box_labels 21: door; score: 0.07848464697599411
+box_labels 22: bag; score: 0.07738431543111801
+box_labels 23: cabinet; score: 0.0667300894856453
+box_labels 24: shelf; score: 0.05509123578667641
+box_labels 25: handle; score: 0.049514755606651306
+box_labels 26: counter; score: 0.04639161750674248
+box_labels 27: handle; score: 0.04052027314901352
+box_labels 28: drawer; score: 0.039649687707424164
+box_labels 29: laptop; score: 0.036873266100883484
+**************************************************
+rel_labels 0: 0_sink => in => 20_room; score: 0.9297393560409546
+rel_labels 1: 23_cabinet => under => 24_shelf; score: 0.9241644144058228
+rel_labels 2: 23_cabinet => under => 12_counter; score: 0.9234524369239807
+rel_labels 3: 20_room => has => 25_handle; score: 0.874611496925354
+rel_labels 4: 7_drawer => under => 24_shelf; score: 0.8711109161376953
+rel_labels 5: 9_drawer => in => 20_room; score: 0.8705626726150513
+rel_labels 6: 17_drawer => in => 20_room; score: 0.8625859022140503
+rel_labels 7: 6_drawer => under => 24_shelf; score: 0.8625666499137878
+rel_labels 8: 7_drawer => in => 20_room; score: 0.8571170568466187
+rel_labels 9: 20_room => has => 16_handle; score: 0.8519889116287231
+rel_labels 10: 10_cabinet => has => 16_handle; score: 0.8511415123939514
+rel_labels 11: 7_drawer => under => 12_counter; score: 0.8498536348342896
+rel_labels 12: 5_cabinet => under => 12_counter; score: 0.8484638929367065
+rel_labels 13: 12_counter => in => 20_room; score: 0.8452638387680054
+rel_labels 14: 26_counter => has => 16_handle; score: 0.8373401761054993
+rel_labels 15: 20_room => has => 27_handle; score: 0.8358032703399658
+rel_labels 16: 20_room => has => 15_door; score: 0.8357577323913574
+rel_labels 17: 26_counter => has => 15_door; score: 0.8351548910140991
+rel_labels 18: 10_cabinet => has => 15_door; score: 0.8350088000297546
+rel_labels 19: 19_cabinet => in => 20_room; score: 0.8302636742591858
+rel_labels 20: 9_drawer => under => 24_shelf; score: 0.8293426036834717
+rel_labels 21: 23_cabinet => under => 3_shelf; score: 0.828952431678772
+rel_labels 22: 5_cabinet => under => 24_shelf; score: 0.8241530656814575
+rel_labels 23: 23_cabinet => under => 0_sink; score: 0.8210541009902954
+rel_labels 24: 7_drawer => under => 0_sink; score: 0.8187767267227173
+rel_labels 25: 26_counter => has => 25_handle; score: 0.8158780932426453
+rel_labels 26: 7_drawer => under => 13_box; score: 0.8109516501426697
+rel_labels 27: 15_door => under => 24_shelf; score: 0.8107398748397827
+rel_labels 28: 26_counter => in => 20_room; score: 0.8051661849021912
+rel_labels 29: 18_door => under => 24_shelf; score: 0.8051207065582275
+rel_labels 30: 26_counter => has => 27_handle; score: 0.8006886839866638
+rel_labels 31: 6_drawer => under => 12_counter; score: 0.7988028526306152
+rel_labels 32: 6_drawer => in => 20_room; score: 0.7958880662918091
+rel_labels 33: 15_door => under => 12_counter; score: 0.7955218553543091
+rel_labels 34: 19_cabinet => under => 12_counter; score: 0.7941750288009644
+rel_labels 35: 1_door => has => 25_handle; score: 0.7928194999694824
+rel_labels 36: 1_door => has => 27_handle; score: 0.7926297187805176
+rel_labels 37: 6_drawer => under => 13_box; score: 0.7895039319992065
+rel_labels 38: 20_room => has => 18_door; score: 0.7878022193908691
+rel_labels 39: 9_drawer => under => 12_counter; score: 0.7869992256164551
+rel_labels 40: 6_drawer => under => 0_sink; score: 0.7848028540611267
+rel_labels 41: 19_cabinet => under => 24_shelf; score: 0.7828229665756226
+rel_labels 42: 26_counter => has => 18_door; score: 0.7822357416152954
+rel_labels 43: 9_drawer => under => 13_box; score: 0.7818794846534729
+rel_labels 44: 10_cabinet => has => 18_door; score: 0.781456470489502
+rel_labels 45: 7_drawer => under => 3_shelf; score: 0.7782288789749146
+rel_labels 46: 18_door => under => 12_counter; score: 0.7777156233787537
+rel_labels 47: 23_cabinet => under => 28_drawer; score: 0.7722042798995972
+rel_labels 48: 17_drawer => under => 24_shelf; score: 0.7699137330055237
+rel_labels 49: 10_cabinet => has => 25_handle; score: 0.7633838057518005
+rel_labels 50: 1_door => in => 20_room; score: 0.7629293203353882
+rel_labels 51: 28_drawer => in => 20_room; score: 0.7628886699676514
+rel_labels 52: 2_cabinet => has => 15_door; score: 0.7621554732322693
+rel_labels 53: 23_cabinet => under => 13_box; score: 0.7615855932235718
+rel_labels 54: 6_drawer => under => 3_shelf; score: 0.7591693997383118
+rel_labels 55: 10_cabinet => has => 27_handle; score: 0.7573789358139038
+rel_labels 56: 2_cabinet => under => 12_counter; score: 0.7540050148963928
+rel_labels 57: 28_drawer => under => 24_shelf; score: 0.748685896396637
+rel_labels 58: 2_cabinet => has => 16_handle; score: 0.7443057298660278
+rel_labels 59: 9_drawer => under => 0_sink; score: 0.740514874458313
+rel_labels 60: 2_cabinet => in => 20_room; score: 0.7393965721130371
+rel_labels 61: 5_cabinet => in => 20_room; score: 0.7287565469741821
+rel_labels 62: 17_drawer => under => 13_box; score: 0.7283020615577698
+rel_labels 63: 20_room => has => 7_drawer; score: 0.7276345491409302
+rel_labels 64: 20_room => has => 6_drawer; score: 0.7270215749740601
+rel_labels 65: 28_drawer => under => 12_counter; score: 0.7249287962913513
+rel_labels 66: 19_cabinet => has => 15_door; score: 0.7247248888015747
+rel_labels 67: 12_counter => has => 27_handle; score: 0.7207818031311035
+rel_labels 68: 15_door => under => 13_box; score: 0.7197749614715576
+rel_labels 69: 26_counter => has => 21_door; score: 0.7196308970451355
+rel_labels 70: 9_drawer => under => 3_shelf; score: 0.7155855298042297
+rel_labels 71: 12_counter => has => 15_door; score: 0.7106751799583435
+rel_labels 72: 2_cabinet => has => 25_handle; score: 0.704501211643219
+rel_labels 73: 11_board => in => 20_room; score: 0.7037593126296997
+rel_labels 74: 17_drawer => under => 12_counter; score: 0.7019873261451721
+rel_labels 75: 28_drawer => under => 0_sink; score: 0.6978097558021545
+rel_labels 76: 12_counter => has => 16_handle; score: 0.6972358226776123
+rel_labels 77: 20_room => has => 9_drawer; score: 0.6958945393562317
+rel_labels 78: 12_counter => has => 25_handle; score: 0.6942405700683594
+rel_labels 79: 20_room => has => 21_door; score: 0.6938310861587524
+rel_labels 80: 26_counter => has => 6_drawer; score: 0.6919060349464417
+rel_labels 81: 21_door => in => 20_room; score: 0.6906484961509705
+rel_labels 82: 10_cabinet => has => 21_door; score: 0.6898301243782043
+rel_labels 83: 20_room => has => 17_drawer; score: 0.6888611316680908
+rel_labels 84: 21_door => under => 24_shelf; score: 0.6882165670394897
+rel_labels 85: 1_door => has => 16_handle; score: 0.6841305494308472
+rel_labels 86: 2_cabinet => has => 18_door; score: 0.6840339303016663
+rel_labels 87: 15_door => under => 3_shelf; score: 0.6818282604217529
+rel_labels 88: 5_cabinet => under => 0_sink; score: 0.6785773038864136
+rel_labels 89: 10_cabinet => has => 4_door; score: 0.6763508915901184
+rel_labels 90: 2_cabinet => has => 27_handle; score: 0.6743842363357544
+rel_labels 91: 5_cabinet => has => 15_door; score: 0.6743483543395996
+rel_labels 92: 5_cabinet => under => 13_box; score: 0.6740962266921997
+rel_labels 93: 26_counter => has => 7_drawer; score: 0.6723836660385132
+rel_labels 94: 15_door => under => 0_sink; score: 0.6651936173439026
+rel_labels 95: 10_cabinet => has => 6_drawer; score: 0.6635830998420715
+rel_labels 96: 2_cabinet => under => 0_sink; score: 0.6623627543449402
+rel_labels 97: 11_board => has => 16_handle; score: 0.6605989336967468
+rel_labels 98: 26_counter => has => 17_drawer; score: 0.6595546007156372
+rel_labels 99: 23_cabinet => under => 26_counter; score: 0.6590234041213989
