@@ -1,0 +1,132 @@
+**************************************************
+box_labels 0: cup; score: 0.7695399522781372
+box_labels 1: bottle; score: 0.5121135711669922
+box_labels 2: shelf; score: 0.3747299611568451
+box_labels 3: logo; score: 0.34379804134368896
+box_labels 4: shelf; score: 0.33587437868118286
+box_labels 5: book; score: 0.3238362967967987
+box_labels 6: shelf; score: 0.31165263056755066
+box_labels 7: cup; score: 0.29630541801452637
+box_labels 8: shelf; score: 0.2911441922187805
+box_labels 9: cup; score: 0.2584361433982849
+box_labels 10: cup; score: 0.24222290515899658
+box_labels 11: counter; score: 0.17881427705287933
+box_labels 12: bowl; score: 0.16696085035800934
+box_labels 13: shelf; score: 0.15368930995464325
+box_labels 14: cabinet; score: 0.15052688121795654
+box_labels 15: shelf; score: 0.1474822610616684
+box_labels 16: box; score: 0.1414431631565094
+box_labels 17: box; score: 0.10952813178300858
+box_labels 18: shelf; score: 0.1024603620171547
+box_labels 19: light; score: 0.09627089649438858
+box_labels 20: tile; score: 0.09479721635580063
+box_labels 21: shelf; score: 0.08387947082519531
+box_labels 22: light; score: 0.07896684110164642
+box_labels 23: box; score: 0.07593034207820892
+box_labels 24: box; score: 0.07103577256202698
+box_labels 25: handle; score: 0.07033046334981918
+box_labels 26: lamp; score: 0.06616222858428955
+box_labels 27: cabinet; score: 0.056406453251838684
+box_labels 28: door; score: 0.0534123070538044
+box_labels 29: logo; score: 0.04999005049467087
+**************************************************
+rel_labels 0: 20_tile => under => 4_shelf; score: 0.8778948783874512
+rel_labels 1: 20_tile => under => 22_light; score: 0.8739976286888123
+rel_labels 2: 20_tile => under => 8_shelf; score: 0.8685457110404968
+rel_labels 3: 20_tile => under => 15_shelf; score: 0.8436087965965271
+rel_labels 4: 20_tile => under => 18_shelf; score: 0.838219404220581
+rel_labels 5: 20_tile => under => 13_shelf; score: 0.8182879090309143
+rel_labels 6: 20_tile => under => 21_shelf; score: 0.7782807350158691
+rel_labels 7: 22_light => above => 11_counter; score: 0.7648032307624817
+rel_labels 8: 22_light => above => 21_shelf; score: 0.7501941919326782
+rel_labels 9: 20_tile => under => 2_shelf; score: 0.7458521723747253
+rel_labels 10: 20_tile => under => 16_box; score: 0.7243626117706299
+rel_labels 11: 22_light => above => 4_shelf; score: 0.7084316611289978
+rel_labels 12: 20_tile => under => 26_lamp; score: 0.70658940076828
+rel_labels 13: 18_shelf => above => 11_counter; score: 0.7056549191474915
+rel_labels 14: 11_counter => under => 8_shelf; score: 0.6925472021102905
+rel_labels 15: 11_counter => under => 18_shelf; score: 0.6918827891349792
+rel_labels 16: 22_light => above => 2_shelf; score: 0.6817628741264343
+rel_labels 17: 16_box => above => 11_counter; score: 0.681358814239502
+rel_labels 18: 11_counter => under => 4_shelf; score: 0.6790730357170105
+rel_labels 19: 20_tile => under => 19_light; score: 0.670482337474823
+rel_labels 20: 22_light => above => 1_bottle; score: 0.6616945266723633
+rel_labels 21: 18_shelf => above => 21_shelf; score: 0.6579297184944153
+rel_labels 22: 21_shelf => under => 22_light; score: 0.6504647731781006
+rel_labels 23: 14_cabinet => has => 25_handle; score: 0.6490029692649841
+rel_labels 24: 11_counter => under => 22_light; score: 0.6479026675224304
+rel_labels 25: 9_cup => has => 25_handle; score: 0.647443413734436
+rel_labels 26: 16_box => above => 21_shelf; score: 0.6369134187698364
+rel_labels 27: 6_shelf => has => 3_logo; score: 0.6299570202827454
+rel_labels 28: 21_shelf => under => 18_shelf; score: 0.620938777923584
+rel_labels 29: 22_light => above => 15_shelf; score: 0.6192004680633545
+rel_labels 30: 15_shelf => in => 14_cabinet; score: 0.6128052473068237
+rel_labels 31: 5_book => in => 12_bowl; score: 0.6107105016708374
+rel_labels 32: 14_cabinet => has => 15_shelf; score: 0.6101526021957397
+rel_labels 33: 14_cabinet => has => 3_logo; score: 0.6076211333274841
+rel_labels 34: 13_shelf => in => 14_cabinet; score: 0.604640543460846
+rel_labels 35: 20_tile => under => 27_cabinet; score: 0.5962902903556824
+rel_labels 36: 21_shelf => under => 8_shelf; score: 0.5946065783500671
+rel_labels 37: 9_cup => with => 29_logo; score: 0.5933817625045776
+rel_labels 38: 22_light => above => 8_shelf; score: 0.5925633907318115
+rel_labels 39: 11_counter => under => 2_shelf; score: 0.5883060097694397
+rel_labels 40: 22_light => above => 10_cup; score: 0.5827376842498779
+rel_labels 41: 22_light => above => 20_tile; score: 0.5781744122505188
+rel_labels 42: 11_counter => under => 15_shelf; score: 0.5760998129844666
+rel_labels 43: 6_shelf => has => 25_handle; score: 0.5752168893814087
+rel_labels 44: 16_box => above => 4_shelf; score: 0.5678480267524719
+rel_labels 45: 16_box => above => 2_shelf; score: 0.5515889525413513
+rel_labels 46: 28_door => has => 3_logo; score: 0.5510138273239136
+rel_labels 47: 21_shelf => under => 4_shelf; score: 0.5498033165931702
+rel_labels 48: 18_shelf => above => 2_shelf; score: 0.5496572852134705
+rel_labels 49: 18_shelf => above => 4_shelf; score: 0.5469550490379333
+rel_labels 50: 26_lamp => above => 11_counter; score: 0.5394814014434814
+rel_labels 51: 11_counter => under => 13_shelf; score: 0.5344651937484741
+rel_labels 52: 4_shelf => under => 22_light; score: 0.5335149168968201
+rel_labels 53: 19_light => above => 11_counter; score: 0.5320673584938049
+rel_labels 54: 13_shelf => with => 29_logo; score: 0.5301347374916077
+rel_labels 55: 21_shelf => under => 2_shelf; score: 0.528253972530365
+rel_labels 56: 4_shelf => with => 5_book; score: 0.5281821489334106
+rel_labels 57: 1_bottle => sitting on => 21_shelf; score: 0.5259650945663452
+rel_labels 58: 14_cabinet => has => 13_shelf; score: 0.5246524214744568
+rel_labels 59: 2_shelf => with => 5_book; score: 0.5207949280738831
+rel_labels 60: 16_box => has => 3_logo; score: 0.5156229734420776
+rel_labels 61: 20_tile => under => 11_counter; score: 0.5084116458892822
+rel_labels 62: 20_tile => under => 6_shelf; score: 0.5058534741401672
+rel_labels 63: 27_cabinet => with => 3_logo; score: 0.5016476511955261
+rel_labels 64: 18_shelf => with => 3_logo; score: 0.4991597831249237
+rel_labels 65: 11_counter => under => 21_shelf; score: 0.49823230504989624
+rel_labels 66: 15_shelf => in => 6_shelf; score: 0.4887678921222687
+rel_labels 67: 26_lamp => above => 21_shelf; score: 0.4876256287097931
+rel_labels 68: 20_tile => under => 1_bottle; score: 0.48727327585220337
+rel_labels 69: 10_cup => under => 22_light; score: 0.4870881736278534
+rel_labels 70: 5_book => sitting on => 21_shelf; score: 0.4848763346672058
+rel_labels 71: 13_shelf => above => 11_counter; score: 0.47792139649391174
+rel_labels 72: 5_book => sitting on => 2_shelf; score: 0.47501665353775024
+rel_labels 73: 20_tile => under => 28_door; score: 0.47341039776802063
+rel_labels 74: 20_tile => under => 7_cup; score: 0.4732874929904938
+rel_labels 75: 5_book => sitting on => 4_shelf; score: 0.4728562533855438
+rel_labels 76: 19_light => above => 21_shelf; score: 0.4720239043235779
+rel_labels 77: 22_light => above => 6_shelf; score: 0.4715997576713562
+rel_labels 78: 2_shelf => in => 14_cabinet; score: 0.46788957715034485
+rel_labels 79: 4_shelf => above => 11_counter; score: 0.4674416482448578
+rel_labels 80: 20_tile => under => 9_cup; score: 0.46514183282852173
+rel_labels 81: 16_box => above => 15_shelf; score: 0.4614337086677551
+rel_labels 82: 6_shelf => with => 5_book; score: 0.46050408482551575
+rel_labels 83: 20_tile => under => 14_cabinet; score: 0.45923706889152527
+rel_labels 84: 6_shelf => has => 15_shelf; score: 0.4590628445148468
+rel_labels 85: 21_shelf => under => 15_shelf; score: 0.45794764161109924
+rel_labels 86: 27_cabinet => in => 14_cabinet; score: 0.45617353916168213
+rel_labels 87: 11_counter => under => 16_box; score: 0.45456480979919434
+rel_labels 88: 1_bottle => sitting on => 2_shelf; score: 0.4534415900707245
+rel_labels 89: 21_shelf => under => 13_shelf; score: 0.45297345519065857
+rel_labels 90: 18_shelf => above => 20_tile; score: 0.45275765657424927
+rel_labels 91: 29_logo => on => 6_shelf; score: 0.4523812234401703
+rel_labels 92: 22_light => above => 24_box; score: 0.4502199590206146
+rel_labels 93: 22_light => above => 5_book; score: 0.44708240032196045
+rel_labels 94: 14_cabinet => has => 22_light; score: 0.44486600160598755
+rel_labels 95: 18_shelf => above => 8_shelf; score: 0.44350650906562805
+rel_labels 96: 24_box => in => 12_bowl; score: 0.44234636425971985
+rel_labels 97: 16_box => above => 8_shelf; score: 0.4421565532684326
+rel_labels 98: 8_shelf => above => 11_counter; score: 0.442020982503891
+rel_labels 99: 16_box => above => 20_tile; score: 0.4403398633003235
