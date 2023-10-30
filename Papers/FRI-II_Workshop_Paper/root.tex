@@ -40,7 +40,7 @@
 Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
 
 
-\author{Raghav Rangan, Siddh Bamb, Kevin Zhao, Jerry He% <-this % stops a space
+\author{Raghav Rangan, Siddh Bamb, Kevin Zhao, Zhongyan He% <-this % stops a space
 }
 %\thanks{*This work was supported by...}% <-this % stops a space
 %\thanks{$^{1}$Christina Petlowany is with the Cockrell School of Engineering,
@@ -69,9 +69,9 @@ Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
 \end{abstract}
     
 \section{Introduction}
-    We began our project with an investigation into existing object detection frameworks, namely CLIP, to test how accurately it could identify relational phrases in an input image. We found that it did quite poorly, often detecting contradictory phrases with equal confidence. Our focus shifted onto finding a better way to handle object detection, and we decided on scene graph generation. In essence, an SGG model is capable of taking an input image, detecting objects within it, and creating a graph that relates each of the objects with another. The vertices of this graph are the objects, and the edges connecting them are the relationship. We chose an SGG model trained on Visual Genome \cite{Krishna_Zhu_Groth_Johnson_Hata_Kravitz_Chen_Kalantidis_Li_Shamma_et_al._2017}, a dataset containing various images annotated with a relational graph of their contents. In this way, the edges of our output graph would be prepositions, thus drawing a positional relationship between a pair of objects. Turning the resultant graph into a set of phrases is accomplished through a simple multi-source breadth-first search (BFS). More specifically, for each vertex, we consider its relationship with each of its neighbors, combine the two vertices and the edge with string manipulation, and add the phrase to a larger string, which represents the eventual paragraph which will be generated after the multi-source BFS is complete. We feed this body of text into ChatGPT through the GPT-3.5 API. Specifically, we prompt ChatGPT to answer the following questions based on a body of text, and then provide it with our output paragraph. Finally, the end user is able to interact with the data, asking questions like, "How many chairs are in the room?", "Is there a lamp next to the couch?", etc.
+    We began our project with an investigation into existing object detection frameworks, namely CLIP, to test how accurately it could identify relational phrases in an input image. We found that it did quite poorly, often detecting contradictory phrases with equal confidence. Our focus shifted onto finding a better way to handle object detection, and we decided on scene graph generation. In essence, an SGG model is capable of taking an input image, detecting objects within it, and creating a graph that relates each of the objects with another. The vertices of this graph are the objects, and the edges connecting them are the relationship. We chose an SGG model trained on Visual Genome \cite{Krishna_Zhu_Groth_Johnson_Hata_Kravitz_Chen_Kalantidis_Li_Shamma_et_al._2017}, a dataset containing various images annotated with a relational graph of their contents. In this way, the edges of our output graph would be prepositions, thus drawing a positional relationship between a pair of objects. Turning the resultant graph into a set of phrases is accomplished by iterating through the pairs and adding them to a string. We feed this body of text into ChatGPT through the GPT-3.5 API. Specifically, we prompt ChatGPT to answer the following questions based on a body of text, and then provide it with our output paragraph. Finally, the end user is able to interact with the data, asking questions like, "How many chairs are in the room?", "Is there a lamp next to the couch?", etc.
 
-\section{Background}
+\section{Related Works}
     As part of our preliminary research, we looked into how CLIP, CLIPSeg \cite{lueddecke22_cvpr}, and joint embedding spaces work. CLIP is a contrastive learning image model that takes advantage of a joint embedding space mapped onto by both a text encoder and image encoder \cite{radford2021learning}. By training the encoders to map semantically similar text and images to similar values and push away dissimilar ones, the model can then pick what text matches the image most accurately. This allows for impressive zero shot performance, much better than previous models like ImageNet. We initially provided the CLIP model with a list of relationships we wanted it to find in an input image, such as "Person next to table", "Laptop on table", etc. What we found was that CLIP performs poorly when trying to infer positional relationships between objects in the frame. Furthermore, descriptions where one object was present in the picture and the other wasn't created inconsistent outputs from the CLIP model.
 
     However, when we fed a paragraph of CLIP's top-20 outputs to ChatGPT, we found that the LLM interface was very good at remembering a set of information and answering queries regarding that information correctly. In other words, it was correctly identifying details from the input paragraph, and providing answers that were consistent with the body of information we provided. This initial experiment proved the need for an alternative method to identify positional relationships between objects, and proved the viability of ChatGPT as a functional LLM interface to answer queries given a body of information.
@@ -84,20 +84,13 @@ Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
     Our final system will take the form of a pipeline having three stages:
     \begin{itemize}
         \item The SGG model
-        \item BFS to translate the output graph into a set of phrases
+        \item Phrase Generation to convert output JSON into a context string
         \item ChatGPT interface to answer queries with information from the set of phrases.
     \end{itemize}
 
     \subsection*{The SGG Model}
         For this project we use a pre-trained SGG Model, trained on the Visual Genome dataset. The model is capable of generating a well-connected graph of relationships between objects. This is achieved through two stages, an object detection stage, and the graph generation stage. The object detection stage creates bounding boxes around all detectable objects in the input image. The bounding boxes are calculated around each object, refined, and then stored to keep track of the relative positions of each object in the scene. At this point, the data is passed to the graph generation stage.
-        The Visual Genome dataset splits the graph of each image into two classes: objects (nouns, such as "car", "person", etc.) and predicates (prepositions or verbs, such as "on top of", "riding on", etc.). An example is shown in Figure 1.
-
-        \begin{figure}
-            \centering
-            \includegraphics[width=0.4\textwidth]{images/visual_genome.png}
-            \caption{Example image from Visual Genome (used from Krishna et. al. \cite{Krishna_Zhu_Groth_Johnson_Hata_Kravitz_Chen_Kalantidis_Li_Shamma_et_al._2017}). While every description in the list in (a) can be found in the picture, the dataset presents a subset of them to avoid clutter.}
-            \label{fig:visual_genome}
-        \end{figure}
+        The Visual Genome dataset splits the graph of each image into two classes: objects (nouns, such as "car", "person", etc.) and predicates (prepositions or verbs, such as "on top of", "riding on", etc.).
         
         The generated graph's vertices represent objects, while the directed edges connecting them represent the predicate, or relationship between the source vertex and destination vertex. The specific pre-trained model we use is from Causal-TDE \cite{tang2020sggcode}, which is a state-of-the-art SGG model, using a VGG-based RCNN object detection backbone, and a custom graph generation architecture to achieve higher recall results than previous SGG models. The key differentiating factor is that the final prediction is a result of the difference between a calculated causal graph and a counterfactual graph, which eliminates some training bias that generifies the output relation in previous models. An example of a TDE calculation and its effect on the output prediction is shown in Figure 2.
 
@@ -111,10 +104,10 @@ Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
 
     
     \subsection*{Phrase Generation}
-        Since the output of the model is a JSON file, containing a list in the format \{object, relation, object\}, we need an algorithm that can turn the list into a set of phrases reflecting the relationship. For example, \{laptop, on, table\} needs to be turned into "the laptop is on the table". While the translation can be hard coded, we need to traverse the output graph in order to find each object's relationshp with every other connected object. More specifically, we must visit every node in the graph, and for each directed edge leading away from this node, we need to turn \{\texttt{this\_node, edge, node\_at\_edge}\} into a phrase in the way we outlined above. Since this is a directed graph, we will not have redundant relationships, such as "laptop on table" and "table below laptop". However, our tests with the ChatGPT interface showed that the LLM is able to infer the converse of a relationship it is provided with consistency.
+        Since the output of the model is a JSON file, containing a list in the format \{object, relation, object\}, we need an algorithm that can turn the list into a large string describing the entire set of relatiomships. We go through the output list from the SGG model, and turn each of the entries from the JSON file into a string of the form (object =\textgreater  relation =\textgreater  object). Furthermore, our tests with the ChatGPT interface showed that the LLM is able to accurately and consistently describe a space given the limited description we showed above.
     
     \subsection*{ChatGPT Interface}
-        The final stage of the pipeline is the ChatGPT Interface, which supports the main purpose of our system: relational queries. Using our lab's GPT API key, we were able to interact directly with ChatGPT from our code. However, we needed to provide the information generated by the BFS in a customized query, so that the LLM is prepared to answer any following questions based on its original body of information. However, an important consideration for us was that people could provide the model with new information, overriding the original body of text we provided to it. We provide the body of information regarding the room to the API as a context string, which is immutable from the side of the user, ensuring that the interface's information base is never changed. The query is passed into a function containing the context, which then creates a response by passing the query and the context to the API. In this way, we are able to get consistent and meaningful output from the ChatGPT interface, and ensure that the context is never tampered with.
+        The final stage of the pipeline is the ChatGPT Interface, which supports the main purpose of our system: relational queries. Using our lab's GPT API key, we were able to interact directly with ChatGPT from our code. However, we needed to provide the information generated by the phrase generation in a customized query, so that the LLM is prepared to answer any following questions based on its original body of information. However, an important consideration for us was that people could provide the model with new information, overriding the original body of text we provided to it. We provide the body of information regarding the room to the API as a context string, which is immutable from the side of the user, ensuring that the interface's information base is never changed. The query is passed into a function containing the context, which then creates a response by passing the query and the context to the API. In this way, we are able to get consistent and meaningful output from the ChatGPT interface, and ensure that the context is never tampered with.
 
 
 \section{Experimental Setup}
@@ -127,20 +120,26 @@ Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
 
 
 \section{Results}
-    We were able to successfully build and run the pre-trained Causal-TDE checkpoint on multiple sample images, and we found predictions that were accurate to the state of the scene in the image. Furthermore, the object detection stage correctly identified a variety of objects in the room, and the generated relations reflected a pruned version of the graph, containing relations between objects that were contextually and physically close to each other. A sample result can be seen in Figures 3a and 3b.
+    We were able to successfully build and run the pre-trained Causal-TDE checkpoint on multiple sample images, and we found predictions that were accurate to the state of the scene in the image. Furthermore, the object detection stage correctly identified a variety of objects in the room, and the generated relations reflected a pruned version of the graph, containing relations between objects that were contextually and physically close to each other. A sample result can be seen in Figures 2a and 2b.
 
     \begin{figure}
         \centering
         \begin{subfigure}{0.48\textwidth}
             \centering
-            \includegraphics[width=1\textwidth]{images/output.png}
+            \includegraphics[width=1\textwidth]{images/scene.png}
             \caption{Output of object detection stage, shows bounding boxes around all detected objects in a sample scene of the AHG Lab.}
             \label{fig:outputs}
         \end{subfigure}
         \begin{subfigure}{0.48\textwidth}
             \centering
             \includegraphics[width=1\textwidth]{images/graph.png}
-            \caption{Output of graph generation. Shows multiple reltions between objects detected in the scene. All shown outputs are correct, and can be seen/found in the original image in Figure 3a.}
+            \caption{Output of graph generation. Shows multiple reltions between objects detected in the scene. All shown outputs are correct, and can be seen/found in the original image in Figure 2a.}
+            \label{fig:graph}
+        \end{subfigure}
+        \begin{subfigure}{0.48\textwidth}
+            \centering
+            \includegraphics[width=1\textwidth]{images/output.png}
+            \caption{Output of conversation with GPT. All of the responses' correctness can be verified from the original image.}
             \label{fig:graph}
         \end{subfigure}
         \caption{An example output from the SGG model}
@@ -148,17 +147,16 @@ Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
         
     \end{figure}
 
-    We also tested the functionality of our ChatGPT interface, by providing it with a manually built body of text from the SGG model's output, and we found the conversation to be both accurate and natural, which was huge positive feedback for our approach.
-
-\subsection*{Future Improvements (Before Final Project Deadline)}
+    We then tested the entire pipeline, providing the output JSON of the SGG model to the phrase generator, and running some test queries with the GPT API to see how well it was able to converse given the generated context string. We found the conversations to be detailed, natural, and, most importantly, accurate to the picture of the room. Furthermore, we also showed that malicious user input that tried to change the context was unsuccessful, since the API clearly separates input and context, allowing us control of the security of the system. An example of the output is shown in Figure 2c, and we transcribe a few responses here:
     \begin{itemize}
-        \item Clean up the SGG codebase and update the config arguments to use variables instead of permanent paths.
-        \item Implement the BFS algorithm to trace and translate the output of the SGG model into a set of coherent phrases.
-        \item Implement the automatic handoff between the model and the GPT API.
-        \item Finalize model metrics through further testing with sample images, and run a preliminary experiment with the ChatGPT interface to see if we need any prompt engineering or changes to the structure of the context to make conversation more accurate or natural.
-        \item Begin implementing the system in ROS, and configure the model to take image input from the robot's camera, run the BFS on the output, and pass the result to the interface, which will be text-based, supported by the BWI-Bot's onboard computer.
-        \item The final system will likely require 4 nodes: Movement and capturing a few images of the room, SGG inference, phrase generation, and ChatGPT interface.
+        \item \textit{Question:} What's near the sink? \\ \textit{Answer:} Near the sink, you will likely find a drawer, a cabinet, and possibly a door.
+        \item \textit{Question:} Can you describe the area near the shelves? \\ \textit{Answer:} The area near the shelves typically comprises of several storage cabinets and drawers. These can have handles, doors or shelves, and are typically made from wood or metal. Depending on the size of the shelves, there can be a variety of shapes and sizes of cabinets and drawers. Additionally, there may also be some countertops, sinks or boards with handles beside the shelves.
     \end{itemize}
+
+\section{Discussion}
+    While the results are very promising, and show that our approach is capable of successfully inferring positional relationships between objects detected in a 2D image input, we need to implement this system on a robot to verify its entire functionality. More specifically, we need to implement our pipeline using ROS nodes, and feed the robot's camera feed as image input to the SGG model. We hope to finalize this part of the system by the final submission deadline.
+
+    Furthermore, we hope to look into potential improvements to the SGG model, including upgrading its object detection framework, or optimizing the phrase generator to allow GPT to extract even more detail from our context input.
 
 \section{Conclusion}
     We showed that scene graph generation is an effective methodology to gather contextual information about a space from a 2D image. Furthermore, we were able to use the information gathered to support a conversational interface supported by ChatGPT, creating an end-to-end system capable of accurately describing a space to a user. While we do not directly compare the two, we show that a strictly two-dimensional, image-based approach is able to process positional relations well, for a lower overall computational cost than a three-dimensional approach involving scene reconstruction and labeling point clouds. Improvements to SGG techniques and further advances in text-based generative AI will only increase the capabilities of this system, and make it more effective and human-like. 
