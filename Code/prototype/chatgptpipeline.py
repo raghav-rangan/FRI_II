@@ -70,6 +70,21 @@ def generate_response(question, context):
     )
     return response.choices[0].text
 
+def generate_context(prompt, triplets, rel_topk, obj_labels):
+    words = prompt.split()
+    objs_seen = set()
+    for word in words:
+        if word in obj_labels:
+            objs_seen.add(word)
+        if word[:-1] in obj_labels:
+            objs_seen.add(word[:-1])
+    context = ''
+    for i in range(rel_topk):
+        if triplets[i][0] in objs_seen or triplets[i][2] in objs_seen:
+            context += '(' + triplets[i][0] + ' ' + triplets[i][1] + ' ' + triplets[i][2] + '), '
+    return context
+    
+
 
 # load the following to files from DETECTED_SGG_DIR
 custom_prediction = json.load(open('/Users/kevin/FRI/SGG visualization/custom_prediction.json'))
@@ -77,8 +92,8 @@ custom_data_info = json.load(open('/Users/kevin/FRI/SGG visualization/custom_dat
 
 # parameters
 image_idx = 6
-box_topk = 20 # select top k bounding boxes
-rel_topk = 50 # select top k relationships
+box_topk = 30 # select top k bounding boxes
+rel_topk = 100 # select top k relationships
 ind_to_classes = custom_data_info['ind_to_classes']
 ind_to_predicates = custom_data_info['ind_to_predicates']
 image_path = custom_data_info['idx_to_files'][image_idx]
@@ -91,30 +106,33 @@ all_rel_pairs = custom_prediction[str(image_idx)]['rel_pairs']
 
 for i in range(len(box_labels)):
     box_labels[i] = ind_to_classes[box_labels[i]]
+box_labels = box_labels[:box_topk]
 
 rel_labels = []
 rel_scores = []
+triplets = []
 for i in range(len(all_rel_pairs)):
     if all_rel_pairs[i][0] < box_topk and all_rel_pairs[i][1] < box_topk:
         rel_scores.append(all_rel_scores[i])
         label = box_labels[all_rel_pairs[i][0]] + ' => ' + ind_to_predicates[all_rel_labels[i]] + ' => ' + box_labels[all_rel_pairs[i][1]]
+        triplets.append((box_labels[all_rel_pairs[i][0]], ind_to_predicates[all_rel_labels[i]], box_labels[all_rel_pairs[i][1]]))
         rel_labels.append(label)
 
 rel_labels = rel_labels[:rel_topk]
 rel_scores = rel_scores[:rel_topk]
 
-print(image_path)
-print("\nObjects:")
+# print(image_path)
+# print("\nObjects:")
 
-for i in range(box_topk):
-    print(box_labels[i])
+# for i in range(box_topk):
+#     print(box_labels[i])
 
-print("\nRelationships:")
+# print("\nRelationships:")
 
-for i in range(rel_topk):
-    print(rel_labels[i])
+# for i in range(rel_topk):
+#     print(rel_labels[i])
 
-print("\n\n\n\n")
+# print("\n\n\n\n")
 
 
 context = ''
@@ -123,7 +141,16 @@ for i in range(rel_topk):
 
 load_dotenv()
 
-Your OpenAI API key
+preinstructions = 'Given the following list relationships between objects as determined by an AI model, \
+                please answer my questions as you would a human interpreting the data. However, make \
+                no references to the data itself, and act as if you are an observer in this \
+                room. Here is the data:'
+
+postinstructions = 'Do not mention the data or existence of the data at all, and respond as if you were \
+                    a normal person viewing the room. Use only the information listed here. DO NOT make assumptions \
+                    about other objects in the room.'
+
+# Your OpenAI API key
 api_key=os.getenv('OPENAI_API_KEY')
 
 
@@ -136,6 +163,11 @@ while True:
 
     # Use the user's question as a prompt to the model
     prompt = user_input.strip() + "\n"
-    response = generate_response(prompt, context)
+    cur_context = generate_context(prompt, triplets, rel_topk, box_labels)
+    if len(cur_context) == 0:
+        cur_context = context
+    print(cur_context)
+    response = generate_response(prompt, preinstructions + '\n' + cur_context + '\n' + postinstructions)
 
     print("Response: " + response)
+    print("\n\n")
