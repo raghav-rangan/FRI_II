@@ -32,6 +32,8 @@
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 \usepackage{subcaption}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -179,22 +181,24 @@ Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
 
     The system was tested on a set of 8 sample images, each with a variety of objects and prepositional relationships between them to improve coverage of tests. For each image, the top 10 and top 25 most confident two-object relationship outputs from the SGG model were collected. The number of unique labels present in the output was counted, and this quantity was compared to the total number of labels detected by the object detection layer to calculate the percentage of present objects that were reflected in the SGG model's output. For the top 10 case, results were subpar, with an average of 49\% of objects contained and a standard deviation of 6.6\% across the tests. This means that many objects present in the image were omitted in the most confident predictions (which instead had a higher proportion of the same few objects being repeated multiple times in different relationships). However, upon increasing the cutoff to the top 25 2-object relationships, results improved significantly, to an average of 74.25\% of total objects contained in these relationships and a standard deviation of 6.5\%. Our experimental data can be found in Table 1 in the Appendix. Clearly, with lower thresholds for confidence, more of the objects will be included in the SGG model's output. However, by reducing the cutoff for the confidence, we increase the chance of redundant and/or incorrect triplets, as these tend to have lower confidence in the output if they exist. Potential next steps include determine the optimal thresholds for confidence which balance accuracy versus detail. 
     
-    For the false positive count test, across all 8 images there was a count of 1 for false positive objects detected, and a count of 0 for false positive triplets / relationships predicted. This is a very positive result, as it shows that the system makes very few if any incorrect predictions, meaning our area of improvement is entirely dealing with increasing the quality and quantity of detail captured. Resultingly, future work done with this system should target finding a threshold for relationships to consider when creating the context string to optimize for number of different objects detected in the relationships as well as correctness of relationships. Having more objects contained would allow for the system to answer queries with more detail, as well as queries about these objects which would've been omitted with a higher confidence threshold. Additionally, because we aim to avoid false positives, the system should not set its confidence threshold too low.
+    For the false positive count test, across all 8 images there was a count of 0 for false positive objects detected, and a count of 0 for false positive triplets / relationships predicted. This is a very positive result, as it shows that the system makes very few if any incorrect predictions, meaning our area of improvement is entirely dealing with increasing the quality and quantity of detail captured. Resultingly, future work done with this system should target finding a threshold for relationships to consider when creating the context string to optimize for number of different objects detected in the relationships as well as correctness of relationships. Having more objects contained would allow for the system to answer queries with more detail, as well as queries about these objects which would've been omitted with a higher confidence threshold. Additionally, because we aim to avoid false positives, the system should not set its confidence threshold too low.
 
     Finally, we measured the 'humanness' of our system's interactive capability by asking participants to compare our system's output vs. a human's for a fixed set of questions and try to determine which one was produced by our system. 
     
-    Our results for the test of humanness show\dots TODO (insert figure too).
+    Our results for the test of humanness show that people are not able to clearly distinguish between our AI generated output and a set of answers provided by a real human being. We were able to collect responses from 11 participants, who consented to being involved in the experiment. The results of our experiement are visualized in Figure 3, which shows that the subjects were unable to consistently distinguish between our system's output and actual human responses, indicating to us that the combination of prompt engineering and phrase generation optimizations we did succeeded in making the LLM interface human and natural to talk to. This proves the viability of our system in human-robot interaction related tasks, especially for the use of case of service robots which have to stand in for human assistants.
 
 \section{Discussion}
     Preliminary results are promising, and prove the viability of this approach to semantic and relational queries regarding objects in a scene with successful inference of positional relationships between objects detected in a 2D image input. 
     
     However, in the future, it is necessary to implement this system on a robot to verify its end-to-end functionality. Specifically, this pipeline must be implemented using ROS to predict relationships in a live video, with the robot's camera used as image input for the SGG model. This would prove that this model is viable to use for service robots or other robotics applications, if it is able to answer queries about images being updated in real time rather than with a static image used as input. This would also showcase the true advantage of a scene graph generation based system over three-dimensional inferences of object relations if the system could run efficiently enough for this application.
 
-    Furthermore, we hope to look into potential improvements to the SGG model, including upgrading its object detection framework to use YOLOv7 or a different, more modern model than VGG16. Improvements could also be made to optimize the phrase generator to allow GPT to extract even more detail from our context input, rather than the primitive object-preposition-object relationships being constructed as of now. 
+    Furthermore, we hope to look into potential improvements to the SGG model, including upgrading its object detection framework to use YOLOv7 or a different, more modern model than VGG-16. Improvements could also be made to optimize the phrase generator to allow GPT to extract even more detail from our context input, rather than the primitive object-preposition-object relationships being constructed as of now. 
     
     The system could also benefit from a more rigorously selected threshold for the confidence of object relationship predictions, which optimizes the balance between detail and number of unique objects versus correctness of predicted relationships which pass the threshold for confidence.
 
     Another long-term improvement would be to make the SGG inferences dynamic. We would want to support continuous information updates for the use case of a system that can accompany a visually impaired person on a tour or some guided interaction. We would like to support periodically updating the context string with a new set of relationships as the robot navigates a space, so the user's queries are answered with updated, relevant information.
+
+    Lastly, it would be beneficial to look into improvements to the SGG model's 3D relational inference capabilities. Relationships involving depth, such as 'in front of' or 'behind' do not show up with high confidence, and it would be a useful level of detail that can be added to the SGG model to bring the functionality of the 2D approach to the same as that of a 3D approach, without the computational complexity and running cost.
 
 \section{Conclusion}
     Results show that scene graph generation is an effective methodology to gather contextual information about a space from a 2D image. Furthermore, the proposed system is able to use the information gathered by a scene graph generation model to support a conversational interface using ChatGPT, creating an end-to-end system capable of accurately describing a space to a user. While we do not directly compare the two, we show that a strictly two-dimensional, image-based approach is able to process positional relations well, for a lower overall computational cost than a three-dimensional approach involving scene reconstruction and labeling point clouds. Improvements to SGG techniques and further advances in text-based generative AI will only increase the capabilities of this system, and make it more effective and human-like. This system has numerous applications in robotics, especially accessibility service robots.
@@ -220,6 +224,38 @@ Using Scene Graph Generation to Support LLM-Based Queries to a Vision System}
     \\
     \vspace*{3mm}
     {Table 1: Percent of Detected Objects found in SGG Model Output}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+          \begin{axis}[
+              /pgf/number format/1000 sep={},
+              width=2in,
+              height=1.8in,
+              scale only axis,
+              clip=false,
+              separate axis lines,
+              axis on top,
+              xmin=0,
+              xmax=4.5,
+              xtick={1,3.5},
+              x tick style={draw=none},
+              xticklabels={Identified AI, Did Not Identify AI},
+              ymin=0,
+              ymax=8,
+              ylabel=Participants,
+              every axis plot/.append style={
+                ybar,
+                bar width=10mm,
+                bar shift=0pt,
+                fill
+              }
+            ]
+            \addplot[red]coordinates {(1,5)};
+            \addplot[blue]coordinates{(3.5,6)};
+          \end{axis}
+        \end{tikzpicture}
+        \caption{Bar chart showing the results of our 'humanness' experiment. Out of 11 total participants, 5 were able to correctly identify the AI generated output while 6 identified the human output as AI generated.}
+      \end{figure}
     
 
 % uncomment this >>> when we actually cite stuff
